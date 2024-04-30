@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->time('fecha');
             $table->string('paciente');
-            $table->unsignedBigInteger('id_doctor');
-            $table->foreignId('id_doctor');
+            $table->unsignedBigInteger('medico_id');
+            $table->foreign('medico_id')->references('id')->on('medicos')->onDelete('restrict');
         });
     }
 
