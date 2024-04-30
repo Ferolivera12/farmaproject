@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('salidas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps('fecha');
+            $table->timestamps();
             $table->foreignId('medicamento');
             $table->integer('cantidad');
             $table->string('motivo');
-            $table->unsignedBigInteger('Id_usuario');
-            $table->foreign('Id_usuario')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_usuario');
+            // $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
 
         });
     }

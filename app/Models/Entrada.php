@@ -12,4 +12,9 @@ class Entrada extends Model
     {
         return $this->belongsTo(Usuario::class);
     }
+
+    public function pedidos()
+    {
+        return $this->belongsTo(Pedido::class);
+    }
 }

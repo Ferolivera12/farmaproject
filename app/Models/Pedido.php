@@ -16,4 +16,9 @@ class Pedido extends Model
     {
         return $this->belongsTo(Proveedor::class);
     }
+
+    public function entradas()
+    {
+        return $this->hasMany(Entrada::class);
+    }
 }
