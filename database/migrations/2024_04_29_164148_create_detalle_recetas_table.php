@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('detalle_recetas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('id_receta');
+            $table->foreign('id_receta')->references('id')->on('recetas')->onDelete('restrict');
+            $table->unsignedBigInteger('id_producto');
+            $table->foreign('id_receta')->references('id')->on('recetas')->onDelete('restrict');
+            $table->string('producto_solicitado');
+            
+
         });
     }
 
