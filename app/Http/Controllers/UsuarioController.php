@@ -96,10 +96,23 @@ class UsuarioController extends Controller
         ], 200);
     }
 
-    public function show(Usuario $user)
+    public function show($id)
     {
-        return response()->json(['status' => true, 'data' => $user]);
+        $user = Usuario::find($id);  // Encuentra al usuario por ID
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Usuario no encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $user
+        ], 200);
     }
+
 
     public function update(Request $request, Usuario $user)
     {

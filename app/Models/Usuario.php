@@ -43,7 +43,7 @@ class Usuario extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-   
+
     public function entradas()
     {
         return $this->hasMany(Entrada::class);
@@ -55,5 +55,9 @@ class Usuario extends Authenticatable
     public function pedidos()
     {
         return $this->hasMany(Pedido::class);
+    }
+    public function medicos()
+    {
+        return $this->belongsTo(Medico::class);
     }
 }
