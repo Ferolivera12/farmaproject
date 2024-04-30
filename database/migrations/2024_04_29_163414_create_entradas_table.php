@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('entradas', function (Blueprint $table) {
             $table->id();
             $table->timestamps('fecha');
-            $table->foreignId('pedido');
+            $table->unsignedBigInteger('id_pedido');
+            $table->unsignedBigInteger('id_usuario');
+
+            $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

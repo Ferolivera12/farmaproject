@@ -17,8 +17,7 @@ return new class extends Migration
             $table->time('fecha');
             $table->string('paciente');
             $table->unsignedBigInteger('id_doctor');
-            $table->foreignId('id_doctor');
-        });
+            $table->foreign('id_doctor')->references('id')->on('medicos')->onDelete('cascade');        });
     }
 
     /**

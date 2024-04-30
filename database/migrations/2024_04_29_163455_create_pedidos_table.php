@@ -17,8 +17,15 @@ return new class extends Migration
             $table->time('fecha');
             $table->integer('cantidad');
             $table->float('precio_unitario');
-            $table->float('inporte_total');
+            $table->float('importe_total');
             $table->string('estado');
+            $table->unsignedBigInteger('id_usuario');
+            $table->unsignedBigInteger('id_proveedor');
+
+
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_proveedor')->references('id')->on('proveedor')->onDelete('cascade');
+
         });
     }
 
