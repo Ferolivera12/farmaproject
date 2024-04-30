@@ -18,8 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_producto');
             $table->foreign('id_receta')->references('id')->on('recetas')->onDelete('restrict');
             $table->string('producto_solicitado');
-            
-
         });
     }
 
