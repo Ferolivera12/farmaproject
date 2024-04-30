@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Medicamento extends Model
 {
     use HasFactory;
+    // Relación uno a muchos: Un medicamento tiene muchas categorías
+    public function categorias()
+    {
+        return $this->hasMany(Categoria::class);
+    }
 }

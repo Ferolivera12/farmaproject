@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Entrada extends Model
 {
     use HasFactory;
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class);
+    }
 }

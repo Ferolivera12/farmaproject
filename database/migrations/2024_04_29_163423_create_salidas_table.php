@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('medicamento');
             $table->integer('cantidad');
             $table->string('motivo');
+            $table->unsignedBigInteger('Id_usuario');
+            $table->foreign('Id_usuario')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

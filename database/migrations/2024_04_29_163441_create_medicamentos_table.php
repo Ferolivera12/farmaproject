@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamps('fechavencimiento');
             $table->float('precio');
             $table->integer('cantidad');
+            $table->string('categoria');
+
             $table->timestamps();
         });
     }
