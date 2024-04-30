@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/login', [AuthController::class, 'login']);
+# Todas las rutas deben estar protegidas para que no se puedan acceder sin autenticarnos.
+#La unica ruta que estara si nautenticacion sera la ruta de registro ya que es ahi donde el usuario obtiene el token
+
+Route::post('auth/register', [UsuarioController::class, 'store']);
+Route::post('auth/login', [UsuarioController::class, 'login']);
+
+//Grupo de rutas
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::resource('users', UsuarioController::class);
+});
