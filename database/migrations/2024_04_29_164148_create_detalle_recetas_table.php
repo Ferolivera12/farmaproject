@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('productos_solicitados');
             $table->integer('cantidad');
 
-            $table->foreign('id_receta')->references('id')->on('receta_medica')->onDelete('cascade');
+            $table->foreign('id_receta')->references('id')->on('receta_medicas')->onDelete('cascade');
             $table->foreign('id_producto')->references('id')->on('medicamentos')->onDelete('cascade');
             $table->string('producto_solicitado');
         });

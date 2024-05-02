@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->time('fecha');
-            $table->string('paciente');
-            $table->unsignedBigInteger('id_doctor');
-            $table->foreign('id_doctor')->references('id')->on('medicos')->onDelete('cascade');        
+            $table->string('paciente');      
             $table->unsignedBigInteger('medico_id');
             $table->foreign('medico_id')->references('id')->on('medicos')->onDelete('restrict');
-    }
+    });
+}
 
     /**
      * Reverse the migrations.
