@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('receta_medicas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->time('fecha');
+            $table->date('fecha');
             $table->string('paciente');
             $table->unsignedBigInteger('id_doctor');
             $table->foreign('id_doctor')->references('id')->on('medicos')->onDelete('cascade');
