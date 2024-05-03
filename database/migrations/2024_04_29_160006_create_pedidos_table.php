@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->time('fecha');
+            $table->dateTime('fecha_hora');
             $table->integer('cantidad');
             $table->float('precio_unitario');
             $table->float('importe_total');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_proveedor');
 
 
-            // $table->foreign('id_usuario')->references('id')->on('usuario')->onDelete('cascade');
+            // $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
             // $table->foreign('id_proveedor')->references('id')->on('proveedor')->onDelete('cascade');
 
         });
