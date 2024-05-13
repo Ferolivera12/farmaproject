@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\MedicoController;
+use App\Http\Controllers\UserController;
+use App\Models\Medico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 # Todas las rutas deben estar protegidas para que no se puedan acceder sin autenticarnos.
 #La unica ruta que estara si nautenticacion sera la ruta de registro ya que es ahi donde el usuario obtiene el token
 
-Route::post('auth/register', [UsuarioController::class, 'store']);
-Route::post('auth/login', [UsuarioController::class, 'login']);
+Route::post('auth/register', [UserController::class, 'store']);
+Route::post('auth/login', [UserController::class, 'login']);
 
 //Grupo de rutas
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('users', UsuarioController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('medicos', MedicoController::class);
 });

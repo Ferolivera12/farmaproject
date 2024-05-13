@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pedido');
             $table->unsignedBigInteger('id_usuario');
 
-            // $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete('cascade');
-            // $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
         });
     }
 
