@@ -22,7 +22,7 @@ class MedicoFactory extends Factory
             'cedula' => $this->faker->unique()->randomNumber(8, true), // Genera un ID único de 8 dígitos
             'nombre' => $this->faker->name(),
             'area' => $this->faker->randomElement(['General', 'Pediatría', 'Cardiología', 'Neurología']), // Ejemplos de áreas
-            'id_usuario' => UsuarioFactory::new()->create()->id, // Crea un usuario relacionado y asigna el ID
+            'id_usuario' => UserFactory::new()->create()->id, // Crea un usuario relacionado y asigna el ID
         ];
     }
 }

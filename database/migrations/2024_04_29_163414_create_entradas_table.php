@@ -17,9 +17,12 @@ return new class extends Migration
             $table->dateTime('fecha_hora');
             $table->unsignedBigInteger('id_pedido');
             $table->unsignedBigInteger('id_usuario');
-
-            // $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete('cascade');
-            // $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreignId('medicamento');
+            $table->integer('cantidad');
+            $table->string('lote');
+            $table->dateTime('fecha_vencimiento');
+            $table->foreign('id_pedido')->references('id')->on('pedidos')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

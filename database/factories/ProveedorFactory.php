@@ -2,22 +2,29 @@
 
 namespace Database\Factories;
 
+use App\Models\Proveedor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Proveedor>
- */
 class ProveedorFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Proveedor::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->firstName,
+            'apellidos' => $this->faker->lastName,
+            'telefono' => $this->faker->phoneNumber,
         ];
     }
 }
