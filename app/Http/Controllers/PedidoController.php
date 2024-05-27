@@ -16,6 +16,7 @@ class PedidoController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear pedido');
         $rules = [
             'fecha_hora' => 'required | dateTime',
             'cantidad' => 'required | integer',
@@ -46,6 +47,7 @@ class PedidoController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver pedido');
         $pedido = Pedido::find($id);
 
         if (!$pedido) {
@@ -63,6 +65,7 @@ class PedidoController extends Controller
 
     public function update(Request $request, Pedido $pedido)
     {
+        $this->authorize('actualizar pedido');
         $rules = [
             'fecha' => 'date',
             'cantidad' => 'integer',
@@ -114,6 +117,7 @@ class PedidoController extends Controller
 
     public function destroy(Pedido $pedido)
     {
+        $this->authorize('eliminar pedido');
         $pedido->delete();
         return response()->json([
             'status' => true,

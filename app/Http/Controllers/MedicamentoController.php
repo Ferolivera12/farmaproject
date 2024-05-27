@@ -16,6 +16,7 @@ class MedicamentoController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear medicamento');
         $rules = [
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string | max:255',
@@ -46,6 +47,7 @@ class MedicamentoController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver medicamento');
         $medicamento = Medicamento::find($id);
 
         if (!$medicamento) {
@@ -63,6 +65,7 @@ class MedicamentoController extends Controller
 
     public function update(Request $request, Medicamento $medicamento)
     {
+        $this->authorize('editar medicamento');
         $rules = [
             'nombre' => 'string | max:255',
             'descripcion' => 'string | max:255',
@@ -114,6 +117,7 @@ class MedicamentoController extends Controller
 
     public function destroy(Medicamento $medicamento)
     {
+        $this->authorize('eliminar medicamento');
         $medicamento->delete();
         return response()->json([
             'status' => true,

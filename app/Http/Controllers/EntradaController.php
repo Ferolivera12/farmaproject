@@ -16,6 +16,7 @@ class EntradaController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear entrada');
         $rules = [
             'fecha_hora' => 'required | dateTime',
             'id_pedido' => 'required | integer',
@@ -46,6 +47,7 @@ class EntradaController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver entrada');
         $entrada = Entrada::find($id);
 
         if (!$entrada) {
@@ -63,6 +65,7 @@ class EntradaController extends Controller
 
     public function update(Request $request, Entrada $entrada)
     {
+        $this->authorize('editar entrada');
         $rules = [
             'fecha' => 'date',
             'id_pedido' => 'integer',
@@ -114,6 +117,7 @@ class EntradaController extends Controller
 
     public function destroy(Entrada $entrada)
     {
+        $this->authorize('eliminar entrada');
         $entrada->delete();
         return response()->json([
             'status' => true,
