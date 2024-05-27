@@ -16,6 +16,7 @@ class RecetaMedicaController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear receta');
         $rules = [
             'fecha' => 'required | date',
             'paciente' => 'required | string | max:255',
@@ -41,6 +42,7 @@ class RecetaMedicaController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver receta');
         $receta = RecetaMedica::find($id);
 
         if (!$receta) {
@@ -58,6 +60,7 @@ class RecetaMedicaController extends Controller
 
     public function update(Request $request, RecetaMedica $receta)
     {
+        $this->authorize('editar receta');
         $rules = [
             'fecha' => 'date',
             'paciente' => 'string | max:255',
@@ -89,6 +92,7 @@ class RecetaMedicaController extends Controller
 
     public function destroy(RecetaMedica $receta)
     {
+        $this->authorize('eliminar receta');
         $receta->delete();
         return response()->json([
             'status' => true,

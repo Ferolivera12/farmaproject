@@ -16,6 +16,7 @@ class CategoriaController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear categoria');
         $rules = [
             'nombre' => 'required | string | min:1 | max:55',
             'descripcion' => 'nullable | string',
@@ -41,7 +42,8 @@ class CategoriaController extends Controller
 
     public function show($id)
     {
-        $categoria = Categoria::find($id); 
+        $this->authorize('ver categoria');
+        $categoria = Categoria::find($id);
 
         if (!$categoria) {
             return response()->json([
@@ -58,6 +60,7 @@ class CategoriaController extends Controller
 
     public function update(Request $request, Categoria $categoria)
     {
+        $this->authorize('editar categoria');
         $rules = [
             'nombre' => 'string | min:1 | max:255',
             'descripcion' => 'nullable | string',
@@ -89,6 +92,7 @@ class CategoriaController extends Controller
 
     public function destroy(Categoria $categoria)
     {
+        $this->authorize('eliminar categoria');
         $categoria->delete();
         return response()->json([
             'status' => true,

@@ -16,6 +16,7 @@ class DepartamentoController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear departamento');
         $rules = [
             'nombre' => 'required | string | min:1 | max:255',
             'ubicacion' => 'nullable | string | max:255',
@@ -41,6 +42,7 @@ class DepartamentoController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver departamento');
         $departamento = Departamento::find($id);
 
         if (!$departamento) {
@@ -58,6 +60,7 @@ class DepartamentoController extends Controller
 
     public function update(Request $request, Departamento $departamento)
     {
+        $this->authorize('editar departamento');
         $rules = [
             'nombre' => 'string | min:1 | max:255',
             'ubicacion' => 'nullable | string | max:255',
@@ -89,6 +92,7 @@ class DepartamentoController extends Controller
 
     public function destroy(Departamento $departamento)
     {
+        $this->authorize('eliminar departamento');
         $departamento->delete();
         return response()->json([
             'status' => true,
