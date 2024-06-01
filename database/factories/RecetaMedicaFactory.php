@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\RecetaMedica;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RecetaMedica>
- */
 class RecetaMedicaFactory extends Factory
 {
+    protected $model = RecetaMedica::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +17,8 @@ class RecetaMedicaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'fecha' => $this->faker->date(),
+            'paciente' => $this->faker->name(),
         ];
     }
 }

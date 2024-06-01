@@ -21,7 +21,6 @@ class MedicamentoController extends Controller
             'descripcion' => 'required | string | max:255',
             'fechavencimiento' => 'required | date',
             'categoria' => 'required | string | max:255',
-            'cantidad' => 'required | integer',
             'precio' => 'required | numeric',
             'laboratorio' => 'required | string | max:255',
         ];
@@ -63,6 +62,7 @@ class MedicamentoController extends Controller
 
     public function update(Request $request, Medicamento $medicamento)
     {
+        //$this->authorize('editar medicamento');
         $rules = [
             'nombre' => 'string | max:255',
             'descripcion' => 'string | max:255',
@@ -108,12 +108,13 @@ class MedicamentoController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Medicamento actualizado con éxito'
+            'message' => 'Medicamento actualizado con éxito',
         ], 200);
     }
 
     public function destroy(Medicamento $medicamento)
     {
+        //$this->authorize('eliminar medicamento');
         $medicamento->delete();
         return response()->json([
             'status' => true,
