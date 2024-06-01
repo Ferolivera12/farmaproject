@@ -62,7 +62,7 @@ class MedicamentoController extends Controller
 
     public function update(Request $request, Medicamento $medicamento)
     {
-        //$this->authorize('editar medicamento');
+        $this->authorize('editar medicamento');
         $rules = [
             'nombre' => 'string | max:255',
             'descripcion' => 'string | max:255',
