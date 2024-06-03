@@ -20,14 +20,13 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('crear usuario');
         $rules = [
-            'name' => 'required | string | min:1 | max:20',
-            'lastname' => 'required | string | min:1 | max:20',
-            'email' => 'required | email',
-            'password' => 'required'
+            'name' => 'required|string|min:1|max:20',
+            'lastname' => 'required|string|min:1|max:20',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6'
         ];
-        $validator = Validator::make($request->input(), $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
@@ -40,15 +39,14 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'lastname' => $request->input('lastname'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')) # Encriptar la contraseña
-
+            'password' => Hash::make($request->input('password'))
         ]);
         $user->save();
 
         return response()->json([
             'status' => true,
             'message' => 'Usuario creado con éxito',
-            'token' => $user->createToken('api-token')->plainTextToken # Es aqui donde retornamos el token
+            'token' => $user->createToken('api-token')->plainTextToken
         ], 200);
     }
 
@@ -99,7 +97,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $this->authorize('ver usuario');
+        //$this->authorize('ver usuario');
 
         $user = User::find($id);  // Encuentra al usuario por ID
 
