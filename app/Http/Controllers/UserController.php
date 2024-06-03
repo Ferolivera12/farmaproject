@@ -20,6 +20,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear usuario');
         $rules = [
             'name' => 'required | string | min:1 | max:20',
             'lastname' => 'required | string | min:1 | max:20',
@@ -98,6 +99,8 @@ class UserController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver usuario');
+
         $user = User::find($id);  // Encuentra al usuario por ID
 
         if (!$user) {
@@ -116,6 +119,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $this->authorize('editar usuario');
         $rules = [
             'name' => 'nullable | string | min:1 | max:20',
             'lastname' => 'nullable | string | min:1 | max:20',
@@ -156,6 +160,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('eliminar usuario');
         $user->delete();
         return response()->json([
             'status' => true,

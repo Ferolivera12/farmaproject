@@ -16,6 +16,7 @@ class MedicoController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear medico');
         $reglas = [
             'cédula' => 'requerido | string | min:8 | max:10', // Ajusta las reglas de validación según sea necesario
             'nombre' => 'requerido | string | min:3 | max:50',
@@ -42,6 +43,7 @@ class MedicoController extends Controller
 
     public function show(int $id)
     {
+        $this->authorize('ver medico');
         $medico = Medico::find($id);
 
         if (!$medico) {
@@ -59,6 +61,7 @@ class MedicoController extends Controller
 
     public function update(Request $request, Medico $medico)
     {
+        $this->authorize('editar medico');
         $reglas = [
             'cédula' => 'nullable | string | min:8 | max:10', // Ajusta las reglas de validación según sea necesario
             'nombre' => 'nullable | string | min:3 | max:50',
@@ -85,6 +88,7 @@ class MedicoController extends Controller
 
     public function destroy(Medico $medico)
     {
+        $this->authorize('eliminar medico');
         $medico->delete();
 
         return response()->json([
