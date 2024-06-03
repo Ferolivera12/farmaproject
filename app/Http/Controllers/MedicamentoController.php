@@ -16,7 +16,6 @@ class MedicamentoController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('crear medicamento');
         $rules = [
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string | max:255',
@@ -46,7 +45,6 @@ class MedicamentoController extends Controller
 
     public function show($id)
     {
-        $this->authorize('ver medicamento');
         $medicamento = Medicamento::find($id);
 
         if (!$medicamento) {
@@ -64,64 +62,22 @@ class MedicamentoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->authorize('editar medicamento');
-        $rules = [
-            'nombre' => 'string | max:255',
-            'descripcion' => 'string | max:255',
-            'fechavencimiento' => 'date',
-            'categoria' => 'string | max:255',
-            'cantidad' => 'integer',
-            'precio' => 'numeric',
-            'laboratorio' => 'string | max:255',
-        ];
+        $medicamento = Medicamento::findOrFail($request->id);
+        $medicamento->nombre = $request->nombre;
+        $medicamento->descripcion = $request->descripcion;
+        $medicamento->fechavencimiento = $request->fechavencimiento;
+        $medicamento->categoria = $request->categoria;
+        $medicamento->precio = $request->precio;
+        $medicamento->laboratorio = $request->laboratorio;
 
-        $validator = Validator::make($request->input(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()->all()
-            ], 400);
-        }
-
-        $data = [];
-        if ($request->has('nombre')) {
-            $data['nombre'] = $request->input('nombre');
-        }
-        if ($request->has('descripcion')) {
-            $data['descripcion'] = $request->input('descripcion');
-        }
-        if ($request->has('fechavencimiento')) {
-            $data['fechavencimiento'] = $request->input('fechavencimiento');
-        }
-        if ($request->has('categoria')) {
-            $data['categoria'] = $request->input('categoria');
-        }
-        if ($request->has('cantidad')) {
-            $data['cantidad'] = $request->input('cantidad');
-        }
-        if ($request->has('precio')) {
-            $data['precio'] = $request->input('precio');
-        }
-        if ($request->has('laboratorio')) {
-            $data['laboratorio'] = $request->input('laboratorio');
-        }
-        $medicamento->update($data);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Medicamento actualizado con éxito'
-        ], 200);
+        $medicamento->save();
+        return  $medicamento;
     }
 
-    public function destroy(Medicamento $medicamento)
+    public function destroy($id)
     {
-        $this->authorize('eliminar medicamento');
-        $medicamento->delete();
-        return response()->json([
-            'status' => true,
-            'message' => 'Medicamento eliminado con éxito'
-        ], 200);
+        $medicamento = Medicamento::destroy($id);
+        return  $medicamento;
     }
 
     public function all()
