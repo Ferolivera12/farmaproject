@@ -21,7 +21,7 @@ class DepartamentoFactory extends Factory
     {
         return [
             'nombre' => $this->faker->unique()->word,
-            'ubicación' => $this->faker->address,
+            'ubicacion' => $this->faker->address,
         ];
     }
 }
