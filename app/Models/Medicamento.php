@@ -13,4 +13,12 @@ class Medicamento extends Model
     {
         return $this->hasMany(Categoria::class);
     }
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'fechavencimiento',
+        'categoria',
+        'precio',
+        'laboratorio',
+    ];
 }

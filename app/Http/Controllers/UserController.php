@@ -5,21 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request; # Importamos la libreria para poder realizar peticiones
 
 # Importamos el modelo User para hacer uso de el y las siguientes librerias para poder autentificar y generar TOKENS
-use App\Models\Usuario;
+use App\Models\User; // Reemplazar User con Usuario
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash; # hacemos uso de la clase "Hash" para encriptar contraseñas
 use Illuminate\Support\Facades\Auth;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
-        $users = Usuario::all();
+        $users = User::all();
         return response()->json($users);
     }
 
     public function store(Request $request)
     {
+        $this->authorize('crear usuario');
         $rules = [
             'name' => 'required | string | min:1 | max:20',
             'lastname' => 'required | string | min:1 | max:20',
@@ -35,7 +36,7 @@ class UsuarioController extends Controller
             ], 400);
         }
 
-        $user = new Usuario([
+        $user = new User([
             'name' => $request->input('name'),
             'lastname' => $request->input('lastname'),
             'email' => $request->input('email'),
@@ -73,7 +74,7 @@ class UsuarioController extends Controller
             ], 401);
         }
 
-        $user = Usuario::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
         return response()->json([
             'status' => true,
             'message' => 'Usuario ingresado exitosamente',
@@ -98,7 +99,9 @@ class UsuarioController extends Controller
 
     public function show($id)
     {
-        $user = Usuario::find($id);  // Encuentra al usuario por ID
+        $this->authorize('ver usuario');
+
+        $user = User::find($id);  // Encuentra al usuario por ID
 
         if (!$user) {
             return response()->json([
@@ -114,8 +117,9 @@ class UsuarioController extends Controller
     }
 
 
-    public function update(Request $request, Usuario $user)
+    public function update(Request $request, User $user)
     {
+        $this->authorize('editar usuario');
         $rules = [
             'name' => 'nullable | string | min:1 | max:20',
             'lastname' => 'nullable | string | min:1 | max:20',
@@ -154,8 +158,9 @@ class UsuarioController extends Controller
         ], 200);
     }
 
-    public function destroy(Usuario $user)
+    public function destroy(User $user)
     {
+        $this->authorize('eliminar usuario');
         $user->delete();
         return response()->json([
             'status' => true,
