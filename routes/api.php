@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MedicoController;
 use App\Http\Controllers\MedicamentoController;
+use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\MedicamentoDepartamentoController;
 use App\Http\Controllers\UserController;
 use App\Models\Medico;
 use Illuminate\Http\Request;
@@ -34,11 +36,31 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('medicos', MedicoController::class);
 });
 
-Route::controller(MedicamentoController::class)->group(function() {
+Route::controller(MedicamentoController::class)->group(function () {
     Route::get('/medicamentos', 'index');
     Route::post('/medicamento', 'store');
     Route::get('/medicamento/{id}', 'show');
     Route::put('/medicamento/{id}', 'update');
     Route::delete('/medicamento/{id}', 'destroy');
-}
+});
+
+Route::controller(MedicamentoDepartamentoController::class)->group(
+    function () {
+        Route::get('/medicamentosD', 'index');
+        Route::post('/medicamentoD', 'store');
+        Route::get('/medicamentoD/{id}', 'show');
+        Route::put('/medicamentoD/{id}', 'update');
+        Route::delete('/medicamentoD/{id}', 'destroy');
+    }
+);
+
+Route::controller(DepartamentoController::class)->group(
+    function () {
+        Route::get('/departamentos/{id}', 'index');
+        Route::post('/departamento', 'store');
+        Route::get('/departamento/{id}', 'show');
+        Route::put('/departamento/{id}', 'update');
+        Route::delete('/departamento/{id}', 'destroy');
+    }
+
 );

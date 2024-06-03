@@ -23,7 +23,6 @@ class MedicamentoFactory extends Factory
             'descripción' => $this->faker->sentence,
             'fecha_vencimiento' => $this->faker->dateTimeBetween('now', '+2 years'),
             'categoría' => $this->faker->word,
-            'cantidad' => $this->faker->numberBetween(1, 1000),
             'precio' => $this->faker->randomFloat(2, 1, 1000),
             'laboratorio' => $this->faker->company,
         ];
