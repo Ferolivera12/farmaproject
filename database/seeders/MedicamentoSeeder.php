@@ -55,7 +55,7 @@ class MedicamentoSeeder extends Seeder
                 'precio' => 5.5,
                 'laboratorio' => 'Gastrofarma',
             ],
-            // Agrega más medicamentos aquí según sea necesario
+
         ];
 
         // Crear los registros de medicamentos en la base de datos
