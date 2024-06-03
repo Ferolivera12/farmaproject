@@ -16,6 +16,7 @@ class SalidaController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear salida');
         $rules = [
             'fecha_hora' => 'required | dateTime',
             'medicamento' => 'required | string | max:255',
@@ -44,6 +45,7 @@ class SalidaController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver salida');
         $salida = Salida::find($id);
 
         if (!$salida) {
@@ -61,6 +63,7 @@ class SalidaController extends Controller
 
     public function update(Request $request, Salida $salida)
     {
+        $this->authorize('editar salida');
         $rules = [
             'fecha' => 'date',
             'medicamento' => 'string | max:255',
@@ -104,6 +107,7 @@ class SalidaController extends Controller
 
     public function destroy(Salida $salida)
     {
+        $this->authorize('eliminar salida');
         $salida->delete();
         return response()->json([
             'status' => true,

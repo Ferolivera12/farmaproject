@@ -16,6 +16,7 @@ class ProveedorController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('crear proveedor');
         $rules = [
             'nombre' => 'required | string | max:255',
             'apellidos' => 'required | string | max:255',
@@ -42,6 +43,7 @@ class ProveedorController extends Controller
 
     public function show($id)
     {
+        $this->authorize('ver proveedor');
         $proveedor = Proveedor::find($id);
 
         if (!$proveedor) {
@@ -59,6 +61,7 @@ class ProveedorController extends Controller
 
     public function update(Request $request, Proveedor $proveedor)
     {
+        $this->authorize('editar proveedor');
         $rules = [
             'nombre' => 'string | max:255',
             'apellidos' => 'string | max:255',
@@ -94,6 +97,7 @@ class ProveedorController extends Controller
 
     public function destroy(Proveedor $proveedor)
     {
+        $this->authorize('eliminar proveedor');
         $proveedor->delete();
         return response()->json([
             'status' => true,

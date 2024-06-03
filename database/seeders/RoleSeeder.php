@@ -17,8 +17,8 @@ class RoleSeeder extends Seeder
         $admin = Role::firstOrCreate(['name' => 'Administrador']);
         $escritor = Role::firstOrCreate(['name' => 'Escritor']);
 
-        Permission::firstOrCreate(['name' => 'crer recetas'])->assignRole([$admin, $escritor]);
-        Permission::firstOrCreate(['name' => 'editar recetas'])->assignRole([$admin, $escritor]);
+        Permission::firstOrCreate(['name' => 'crear receta'])->assignRole([$admin, $escritor]);
+        Permission::firstOrCreate(['name' => 'editar receta'])->assignRole([$admin, $escritor]);
         Permission::firstOrCreate(['name' => 'ver receta'])->assignRole([$admin, $escritor]);
         Permission::firstOrCreate(['name' => 'eliminar receta'])->assignRole([$admin, $escritor]);
 
