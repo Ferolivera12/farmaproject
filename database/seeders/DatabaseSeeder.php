@@ -15,9 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Crear 10 usuarios
         User::factory(10)->create();
+
+        // Crear 10 médicos, cada uno relacionado con un usuario existente
         Medico::factory(10)->create();
 
+        // Llamar a otros seeders si es necesario
+        $this->call(MedicamentoSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

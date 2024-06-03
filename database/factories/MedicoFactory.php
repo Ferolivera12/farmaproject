@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Medico; // Reemplaza con la ruta de tu modelo si es diferente
+use App\Models\Medico;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator as Faker; // Alias para la clase Faker
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Medico>
@@ -22,7 +22,7 @@ class MedicoFactory extends Factory
             'cedula' => $this->faker->unique()->randomNumber(8, true), // Genera un ID único de 8 dígitos
             'nombre' => $this->faker->name(),
             'area' => $this->faker->randomElement(['General', 'Pediatría', 'Cardiología', 'Neurología']), // Ejemplos de áreas
-            'id_usuario' => UserFactory::new()->create()->id, // Crea un usuario relacionado y asigna el ID
+            'id_usuario' => User::factory(), // Relaciona el médico con un usuario existente
         ];
     }
 }

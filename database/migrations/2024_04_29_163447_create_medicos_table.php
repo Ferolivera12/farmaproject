@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('cedula');
             $table->string('nombre');
             $table->string('area');
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_usuario'); // Clave foránea
             $table->timestamps();
+
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
