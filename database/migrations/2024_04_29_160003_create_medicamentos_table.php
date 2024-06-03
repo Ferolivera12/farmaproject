@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('descripcion');
             $table->timestamps();
             $table->date('fechavencimiento');
-            $table->float('precio');
-            $table->integer('cantidad');
             $table->string('categoria');
+            $table->float('precio');
+            $table->string('laboratorio');
         });
     }
 

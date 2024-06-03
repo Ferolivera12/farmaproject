@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MedicoController;
+use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\UserController;
 use App\Models\Medico;
 use Illuminate\Http\Request;
@@ -32,3 +33,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('medicos', MedicoController::class);
 });
+
+Route::controller(MedicamentoController::class)->group(function() {
+    Route::get('/medicamentos', 'index');
+    Route::post('/medicamento', 'store');
+    Route::get('/medicamento/{id}', 'show');
+    Route::put('/medicamento/{id}', 'update');
+    Route::delete('/medicamento/{id}', 'destroy');
+}
+);

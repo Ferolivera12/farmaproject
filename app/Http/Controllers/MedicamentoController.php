@@ -22,7 +22,6 @@ class MedicamentoController extends Controller
             'descripcion' => 'required | string | max:255',
             'fechavencimiento' => 'required | date',
             'categoria' => 'required | string | max:255',
-            'cantidad' => 'required | integer',
             'precio' => 'required | numeric',
             'laboratorio' => 'required | string | max:255',
         ];
@@ -63,7 +62,7 @@ class MedicamentoController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Medicamento $medicamento)
+    public function update(Request $request, $id)
     {
         $this->authorize('editar medicamento');
         $rules = [
