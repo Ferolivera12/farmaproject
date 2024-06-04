@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\Departamento;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriaController extends Controller
@@ -16,7 +17,6 @@ class CategoriaController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('crear categoria');
         $rules = [
             'nombre' => 'required | string | min:1 | max:55',
             'descripcion' => 'nullable | string',
@@ -42,7 +42,6 @@ class CategoriaController extends Controller
 
     public function show($id)
     {
-        $this->authorize('ver categoria');
         $categoria = Categoria::find($id);
 
         if (!$categoria) {
@@ -60,7 +59,6 @@ class CategoriaController extends Controller
 
     public function update(Request $request, Categoria $categoria)
     {
-        $this->authorize('editar categoria');
         $rules = [
             'nombre' => 'string | min:1 | max:255',
             'descripcion' => 'nullable | string',
@@ -92,7 +90,6 @@ class CategoriaController extends Controller
 
     public function destroy(Categoria $categoria)
     {
-        $this->authorize('eliminar categoria');
         $categoria->delete();
         return response()->json([
             'status' => true,
