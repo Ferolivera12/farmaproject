@@ -13,4 +13,9 @@ class Categoria extends Model
     {
         return $this->belongsTo(Medicamento::class);
     }
+    protected $table = "categorias";
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+    ];
 }

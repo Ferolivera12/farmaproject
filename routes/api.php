@@ -5,6 +5,7 @@ use App\Http\Controllers\MedicoController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\MedicamentoDepartamentoController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UserController;
 use App\Models\Medico;
 use Illuminate\Http\Request;
@@ -56,11 +57,19 @@ Route::controller(MedicamentoDepartamentoController::class)->group(
 
 Route::controller(DepartamentoController::class)->group(
     function () {
-        Route::get('/departamentos/{id}', 'index');
+        Route::get('/departamentos', 'index');
         Route::post('/departamento', 'store');
         Route::get('/departamento/{id}', 'show');
         Route::put('/departamento/{id}', 'update');
         Route::delete('/departamento/{id}', 'destroy');
     }
-
+);
+Route::controller(CategoriaController::class)->group(
+    function () {
+        Route::get('/categorias', 'index');
+        Route::post('/categoria', 'store');
+        Route::get('/categoria/{id}', 'show');
+        Route::put('/categoria/{id}', 'update');
+        Route::delete('/categoria/{id}', 'destroy');
+    }
 );
