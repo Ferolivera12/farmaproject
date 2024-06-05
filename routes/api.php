@@ -7,6 +7,8 @@ use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\MedicamentoDepartamentoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\MedicamentoPedidoController;
 use App\Http\Controllers\UserController;
 use App\Models\Medico;
 use App\Models\Proveedor;
@@ -32,7 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('auth/register', [UserController::class, 'store']);
 Route::post('auth/login', [UserController::class, 'login']);
-
+Route::get('usuarios', [UserController::class, 'index']);
 //Grupo de rutas
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
@@ -83,5 +85,25 @@ Route::controller(ProveedorController::class)->group(
         Route::get('/proveedor/{id}', 'show');
         Route::put('/proveedor/{id}', 'update');
         Route::delete('/proveedor/{id}', 'destroy');
+    }
+);
+
+Route::controller(PedidoController::class)->group(
+    function () {
+        Route::get('/pedidos', 'index');
+        Route::post('/pedido', 'store');
+        Route::get('/pedido/{id}', 'show');
+        Route::put('/pedido/{id}', 'update');
+        Route::delete('/pedido/{id}', 'destroy');
+    }
+);
+
+Route::controller(MedicamentoPedidoController::class)->group(
+    function () {
+        Route::get('/medicamentopedidos', 'index');
+        Route::post('/', 'store');
+        Route::get('/medicamentopedido/{id}', 'show');
+        Route::put('/medicamentopedido/{id}', 'update');
+        Route::delete('/medicamentopedido/{id}', 'destroy');
     }
 );
