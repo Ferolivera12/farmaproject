@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\Departamento;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriaController extends Controller
@@ -16,7 +17,6 @@ class CategoriaController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('crear categoria');
         $rules = [
             'nombre' => 'required | string | min:1 | max:55',
             'descripcion' => 'nullable | string',
@@ -42,7 +42,6 @@ class CategoriaController extends Controller
 
     public function show($id)
     {
-        $this->authorize('ver categoria');
         $categoria = Categoria::find($id);
 
         if (!$categoria) {
@@ -58,31 +57,13 @@ class CategoriaController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
-        $this->authorize('editar categoria');
-        $rules = [
-            'nombre' => 'string | min:1 | max:255',
-            'descripcion' => 'nullable | string',
-        ];
-
-        $validator = Validator::make($request->input(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()->all()
-            ], 400);
-        }
-
-        $data = [];
-        if ($request->has('nombre')) {
-            $data['nombre'] = $request->input('nombre');
-        }
-        if ($request->has('descripcion')) {
-            $data['descripcion'] = $request->input('descripcion');
-        }
-        $categoria->update($data);
+        $categoria = Categoria::findOrFail($id);
+        $categoria->nombre = $request->nombre;
+        $categoria->descripcion = $request->descripcion;
+        $categoria->save();
+        return  $categoria;
 
         return response()->json([
             'status' => true,
@@ -90,10 +71,9 @@ class CategoriaController extends Controller
         ], 200);
     }
 
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
-        $this->authorize('eliminar categoria');
-        $categoria->delete();
+        $categoria = Categoria::destroy($id);
         return response()->json([
             'status' => true,
             'message' => 'Categoria eliminada con exito'

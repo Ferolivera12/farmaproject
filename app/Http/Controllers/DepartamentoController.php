@@ -16,10 +16,9 @@ class DepartamentoController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('crear departamento');
         $rules = [
-            'nombre' => 'required | string | min:1 | max:255',
-            'ubicacion' => 'nullable | string | max:255',
+            'nombre' => 'required|string|min:1|max:255',
+            'ubicacion' => 'nullable|string|max:255',
         ];
 
         $validator = Validator::make($request->input(), $rules);
@@ -42,7 +41,6 @@ class DepartamentoController extends Controller
 
     public function show($id)
     {
-        $this->authorize('ver departamento');
         $departamento = Departamento::find($id);
 
         if (!$departamento) {
@@ -58,31 +56,13 @@ class DepartamentoController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Departamento $departamento)
+    public function update(Request $request, $id)
     {
-        $this->authorize('editar departamento');
-        $rules = [
-            'nombre' => 'string | min:1 | max:255',
-            'ubicacion' => 'nullable | string | max:255',
-        ];
-
-        $validator = Validator::make($request->input(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()->all()
-            ], 400);
-        }
-
-        $data = [];
-        if ($request->has('nombre')) {
-            $data['nombre'] = $request->input('nombre');
-        }
-        if ($request->has('ubicacion')) {
-            $data['ubicacion'] = $request->input('ubicacion');
-        }
-        $departamento->update($data);
+        $departamento = Departamento::findOrFail($id);
+        $departamento->nombre = $request->nombre;
+        $departamento->ubicacion = $request->ubicacion;
+        $departamento->save();
+        return  $departamento;
 
         return response()->json([
             'status' => true,
@@ -90,10 +70,9 @@ class DepartamentoController extends Controller
         ], 200);
     }
 
-    public function destroy(Departamento $departamento)
+    public function destroy($id)
     {
-        $this->authorize('eliminar departamento');
-        $departamento->delete();
+        $departamento = Departamento::destroy($id);
         return response()->json([
             'status' => true,
             'message' => 'Departamento eliminado con éxito'

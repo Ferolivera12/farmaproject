@@ -10,22 +10,23 @@ class MedicamentoController extends Controller
 {
     public function index()
     {
-        $medicamentos = Medicamento::all();
+        $medicamentos = Medicamento::with('categoria')->get();
         return response()->json($medicamentos);
     }
+
 
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => 'required | string | max:255',
-            'descripcion' => 'required | string | max:255',
-            'fechavencimiento' => 'required | date',
-            'categoria' => 'required | string | max:255',
-            'precio' => 'required | numeric',
-            'laboratorio' => 'required | string | max:255',
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+            'fechavencimiento' => 'required|date',
+            'categoria_id' => 'required|numeric',
+            'precio' => 'required|numeric',
+            'laboratorio' => 'required|string|max:255',
         ];
 
-        $validator = Validator::make($request->input(), $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
@@ -34,7 +35,7 @@ class MedicamentoController extends Controller
             ], 400);
         }
 
-        $medicamento = new Medicamento($request->input());
+        $medicamento = new Medicamento($request->all());
         $medicamento->save();
 
         return response()->json([
@@ -42,6 +43,8 @@ class MedicamentoController extends Controller
             'message' => 'Medicamento creado con éxito'
         ], 200);
     }
+
+
 
     public function show($id)
     {
@@ -62,16 +65,21 @@ class MedicamentoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $medicamento = Medicamento::findOrFail($request->id);
+        $medicamento = Medicamento::findOrFail($id);
         $medicamento->nombre = $request->nombre;
         $medicamento->descripcion = $request->descripcion;
         $medicamento->fechavencimiento = $request->fechavencimiento;
-        $medicamento->categoria = $request->categoria;
+        $medicamento->categoria_id = $request->categoria_id;
         $medicamento->precio = $request->precio;
         $medicamento->laboratorio = $request->laboratorio;
 
         $medicamento->save();
-        return  $medicamento;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Medicamento actualizado con éxito',
+            'data' => $medicamento
+        ], 200);
     }
 
     public function destroy($id)

@@ -21,4 +21,13 @@ class Pedido extends Model
     {
         return $this->hasMany(Entrada::class);
     }
+    protected $fillable = [
+        'fecha_hora',
+        'cantidad',
+        'precio_unitario',
+        'importe_total',
+        'estado',
+        'id_usuario',
+        'id_proveedor',
+    ];
 }
