@@ -6,8 +6,10 @@ use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\MedicamentoDepartamentoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
 use App\Models\Medico;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,5 +73,15 @@ Route::controller(CategoriaController::class)->group(
         Route::get('/categoria/{id}', 'show');
         Route::put('/categoria/{id}', 'update');
         Route::delete('/categoria/{id}', 'destroy');
+    }
+);
+
+Route::controller(ProveedorController::class)->group(
+    function () {
+        Route::get('/proveedores', 'index');
+        Route::post('/proveedor', 'store');
+        Route::get('/proveedor/{id}', 'show');
+        Route::put('/proveedor/{id}', 'update');
+        Route::delete('/proveedor/{id}', 'destroy');
     }
 );

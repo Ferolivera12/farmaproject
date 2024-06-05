@@ -16,11 +16,10 @@ class ProveedorController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('crear proveedor');
         $rules = [
-            'nombre' => 'required | string | max:255',
-            'apellidos' => 'required | string | max:255',
-            'telefono' => 'required | string | max:15',
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'telefono' => 'required|string|max:15',
         ];
 
         $validator = Validator::make($request->input(), $rules);
@@ -32,7 +31,11 @@ class ProveedorController extends Controller
             ], 400);
         }
 
-        $proveedor = new Proveedor($request->input());
+        $proveedor = new Proveedor([
+            'nombre' => $request->input('nombre'),
+            'apellidos' => $request->input('apellidos', 'Apellido predeterminado'), // Valor predeterminado si no se proporciona
+            'telefono' => $request->input('telefono'),
+        ]);
         $proveedor->save();
 
         return response()->json([
@@ -41,11 +44,10 @@ class ProveedorController extends Controller
         ], 200);
     }
 
+
     public function show($id)
     {
-        $this->authorize('ver proveedor');
         $proveedor = Proveedor::find($id);
-
         if (!$proveedor) {
             return response()->json([
                 'status' => false,
@@ -59,46 +61,23 @@ class ProveedorController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Proveedor $proveedor)
+    public function update(Request $request, $id)
     {
-        $this->authorize('editar proveedor');
-        $rules = [
-            'nombre' => 'string | max:255',
-            'apellidos' => 'string | max:255',
-            'telefono' => 'string | max:15',
-        ];
-
-        $validator = Validator::make($request->input(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()->all()
-            ], 400);
-        }
-
-        $data = [];
-        if ($request->has('nombre')) {
-            $data['nombre'] = $request->input('nombre');
-        }
-        if ($request->has('apellidos')) {
-            $data['apellidos'] = $request->input('apellidos');
-        }
-        if ($request->has('telefono')) {
-            $data['telefono'] = $request->input('telefono');
-        }
-        $proveedor->update($data);
-
+        $proveedor = Proveedor::findOrFail($id);
+        $proveedor->nombre = $request->nombre;
+        $proveedor->apellidos = $request->apellidos;
+        $proveedor->telefono = $request->telefono;
+        $proveedor->save();
+        return $proveedor;
         return response()->json([
             'status' => true,
             'message' => 'Proveedor actualizado con éxito'
         ], 200);
     }
 
-    public function destroy(Proveedor $proveedor)
+    public function destroy($id)
     {
-        $this->authorize('eliminar proveedor');
-        $proveedor->delete();
+        $proveedor = Proveedor::destroy($id);
         return response()->json([
             'status' => true,
             'message' => 'Proveedor eliminado con éxito'
