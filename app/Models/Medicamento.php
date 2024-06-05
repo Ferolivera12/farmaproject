@@ -9,15 +9,15 @@ class Medicamento extends Model
 {
     use HasFactory;
     // Relación uno a muchos: Un medicamento tiene muchas categorías
-    public function categorias()
+    public function categoria()
     {
-        return $this->hasMany(Categoria::class);
+        return $this->belongsTo(Categoria::class, 'categoria_id');
     }
     protected $fillable = [
         'nombre',
         'descripcion',
         'fechavencimiento',
-        'categoria',
+        'categoria_id',
         'precio',
         'laboratorio',
     ];
